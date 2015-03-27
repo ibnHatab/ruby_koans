@@ -33,22 +33,24 @@ def score(dice)
   total = 0
   return total if dice == []
   
-  slice = dice.sort
-  if slice.length >= 3
-    x,y,z = slice
-    if x == y && y == z
-      total += x==1 ? 1000 : x*100
-      slice = slice[3..-1]
-    end
+  counter = Array.new(7,0)
+  counter[0] = nil
+  dice.each { |idx| counter[idx] += 1 }
+  
+  puts ">> " + counter.to_s
+  
+  
+  (1..6).each do |idx|
+    triples = counter[idx] / 3
+    total += 1000 * triples if idx == 1
+    total += 100 * triples * idx if idx != 1
+    
+    singles = counter[idx] % 3
+    total += 100 * singles if idx == 1
+    total += 50 * singles if idx == 5
   end
   
-  slice.inject(total) do |sum, num|
-    sum + case num
-            when 5;  50
-            when 1;  100
-            else 0
-          end
-  end
+  total
 end
 
 class AboutScoringProject < Neo::Koan
