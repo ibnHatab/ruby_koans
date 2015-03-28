@@ -34,11 +34,8 @@ def score(dice)
   return total if dice == []
   
   counter = Array.new(7,0)
-  counter[0] = nil
+  counter[0] = nil # assert zero index for ariphmetics
   dice.each { |idx| counter[idx] += 1 }
-  
-  puts ">> " + counter.to_s
-  
   
   (1..6).each do |idx|
     triples = counter[idx] / 3
